@@ -44,14 +44,14 @@ export default function Dashboard() {
   };
 
   const handleOpenEdit = (note) => {
-    setEditingNote(note);
+    setEditingNote({ ...note });
     setIsViewOnly(false);
     setIsModalOpen(true);
   };
 
   const handleSwitchToEdit = (note) => {
+    setEditingNote({ ...note });
     setIsViewOnly(false);
-    setEditingNote(note);
   };
 
   const handleSaveNote = async ({ title, content }) => {
