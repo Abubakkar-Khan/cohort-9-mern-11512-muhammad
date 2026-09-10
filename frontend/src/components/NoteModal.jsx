@@ -61,11 +61,9 @@ export default function NoteModal({ isOpen, onClose, onSave, editingNote, isView
   }
 
   const modules = {
-    toolbar: [
-      [{ header: [1, 2, false] }],
-      ["bold", "italic", "underline"],
-      [{ list: "ordered" }, { list: "bullet" }]
-    ]
+    toolbar: {
+      container: "#note-editor-toolbar"
+    }
   };
 
   return (
@@ -125,6 +123,29 @@ export default function NoteModal({ isOpen, onClose, onSave, editingNote, isView
             />
 
             <div className="editor-container">
+              <div id="note-editor-toolbar" className="custom-quill-toolbar">
+                <span className="ql-formats">
+                  <button type="button" className="ql-header ql-btn-text" value="" title="Normal text">
+                    Normal
+                  </button>
+                  <button type="button" className="ql-header ql-btn-text" value="1" title="Heading 1">
+                    H1
+                  </button>
+                  <button type="button" className="ql-header ql-btn-text" value="2" title="Heading 2">
+                    H2
+                  </button>
+                </span>
+                <span className="ql-formats">
+                  <button type="button" className="ql-bold" aria-label="Bold" />
+                  <button type="button" className="ql-italic" aria-label="Italic" />
+                  <button type="button" className="ql-underline" aria-label="Underline" />
+                </span>
+                <span className="ql-formats">
+                  <button type="button" className="ql-list" value="ordered" aria-label="Numbered List" />
+                  <button type="button" className="ql-list" value="bullet" aria-label="Bullet List" />
+                </span>
+              </div>
+
               <ReactQuill
                 theme="snow"
                 value={content}
