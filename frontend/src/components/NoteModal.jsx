@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import { X, Save, Edit3 } from "lucide-react";
@@ -8,20 +8,6 @@ export default function NoteModal({ isOpen, onClose, onSave, editingNote, isView
   const [content, setContent] = useState(editingNote?.content || "");
   const [error, setError] = useState("");
   const [isSaving, setIsSaving] = useState(false);
-
-  useEffect(() => {
-    if (isOpen) {
-      if (editingNote) {
-        setTitle(editingNote.title || "");
-        setContent(editingNote.content || "");
-      } else {
-        setTitle("");
-        setContent("");
-      }
-      setError("");
-      setIsSaving(false);
-    }
-  }, [editingNote, isOpen, isViewOnly]);
 
   if (!isOpen) return null;
 
@@ -70,9 +56,6 @@ export default function NoteModal({ isOpen, onClose, onSave, editingNote, isView
     ]
   };
 
-  const currentDisplayTitle = editingNote?.title || title;
-  const currentDisplayContent = editingNote?.content || content;
-
   return (
     <dialog open className="modal-dialog-root" aria-labelledby="note-modal-heading">
       <button
@@ -98,10 +81,10 @@ export default function NoteModal({ isOpen, onClose, onSave, editingNote, isView
 
         {isViewOnly ? (
           <div className="modal-view-body">
-            <h1 className="note-view-title">{currentDisplayTitle}</h1>
+            <h1 className="note-view-title">{editingNote?.title || title}</h1>
             <div
               className="note-view-content"
-              dangerouslySetInnerHTML={{ __html: currentDisplayContent }}
+              dangerouslySetInnerHTML={{ __html: editingNote?.content || content }}
             />
             <div className="modal-actions">
               <button type="button" onClick={onClose} className="btn-secondary">
@@ -131,7 +114,6 @@ export default function NoteModal({ isOpen, onClose, onSave, editingNote, isView
 
             <div className="editor-container">
               <ReactQuill
-                key={editingNote ? `${editingNote.id}-${isViewOnly}` : "new-note"}
                 theme="snow"
                 value={content}
                 onChange={setContent}

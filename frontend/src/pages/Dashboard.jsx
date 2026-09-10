@@ -44,13 +44,13 @@ export default function Dashboard() {
   };
 
   const handleOpenEdit = (note) => {
-    setEditingNote({ ...note });
+    setEditingNote(note);
     setIsViewOnly(false);
     setIsModalOpen(true);
   };
 
   const handleSwitchToEdit = (note) => {
-    setEditingNote({ ...note });
+    setEditingNote(note);
     setIsViewOnly(false);
   };
 
@@ -139,14 +139,17 @@ export default function Dashboard() {
         {contentArea}
       </main>
 
-      <NoteModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onSave={handleSaveNote}
-        editingNote={editingNote}
-        isViewOnly={isViewOnly}
-        onSwitchToEdit={handleSwitchToEdit}
-      />
+      {isModalOpen && (
+        <NoteModal
+          key={editingNote ? `${editingNote.id}-${isViewOnly}` : "new-note"}
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onSave={handleSaveNote}
+          editingNote={editingNote}
+          isViewOnly={isViewOnly}
+          onSwitchToEdit={handleSwitchToEdit}
+        />
+      )}
 
       <ConfirmModal
         isOpen={!!deletingNoteId}
